@@ -26,7 +26,7 @@ const WordRelay = () => {
     <>
       <div>{word}</div>
       <form onSubmit={onSubmitForm}>
-        <input id="word" ref={inputRef} />
+        <input defaultValue="기찻길" id="word" ref={inputRef} />
         <button>입력!</button>
       </form>
       <div>{result}</div>
