@@ -1,6 +1,6 @@
-import React from "react";
-import { render } from "react-dom";
+const React = require("react");
+const ReactDom = require("react-dom");
 
-import WordRelay from "./WordRelay";
+const WordRelay = require("./WordRelay");
 
-render(<WordRelay />, document.querySelector("#root"));
+ReactDom.render(<WordRelay />, document.querySelector("#root"));
