@@ -49,7 +49,7 @@ class NumberBaseball extends Component {
         for (let i = 0; i < 4; i += 1) {
           if (answerArray[i] === this.state.answer[i]) {
             strike += 1;
-          } else if (this.state.answer.includs(answerArray[i])) {
+          } else if (this.state.answer.includes(answerArray[i])) {
             ball += 1;
           }
         }
@@ -67,6 +67,7 @@ class NumberBaseball extends Component {
   };
 
   onChange = e => {
+    console.log(this.state.answer);
     this.setState({ value: e.target.value });
   };
 
@@ -85,10 +86,9 @@ class NumberBaseball extends Component {
         <div>시도: {this.state.tries.length}</div>
         <ul>
           {this.state.tries.map((v, i) => {
-            return <Try key={`${i}차 시도" : `} tryInfo={v} />;
+            return <Try key={`${i + 1}차 시도" : `} tryInfo={v} />;
           })}
         </ul>
-        <div>{this.state.result}</div>
       </>
     );
   }
