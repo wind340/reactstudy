@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Try from "./try";
 
-function getNumbers() {
+const getNumbers = () => {
   // 숫자 네개를 겹치지 않고 랜덤하게 뽑는 함수
   const candidate = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   const array = [];
@@ -10,12 +10,12 @@ function getNumbers() {
     array.push(chosen);
   }
   return array;
-}
+};
 
 const NumberBaseball = () => {
   const [result, setResult] = useState("");
   const [value, setValue] = useState("");
-  const [answer, setAnswer] = useState(getNumbers());
+  const [answer, setAnswer] = useState(getNumbers);
   const [tries, setTries] = useState([]);
 
   const onSubmit = e => {
