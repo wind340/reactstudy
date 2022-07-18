@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useRef, useCallback } from "react";
 import Try from "./try";
 
 const getNumbers = () => {
@@ -17,19 +17,21 @@ const NumberBaseball = () => {
   const [value, setValue] = useState("");
   const [answer, setAnswer] = useState(getNumbers);
   const [tries, setTries] = useState([]);
+  const inputEl = useRef(null);
 
   const onSubmit = e => {
     e.preventDefault();
     if (value === answer.join("")) {
-      setResult("홈런!"),
-        setTries(prevTries => {
-          return [...prevTries, { try: value, result: "홈런!" }];
-        });
+      setTries(prevTries => {
+        [...prevTries, { try: value, result: "홈런!" }];
+      });
+      setResult("홈런!");
       alert("게임을 다시 시작합니다");
       setValue("");
       setTries([]);
       setAnswer(getNumbers());
       setResult("");
+      inputEl.current.focus();
     } else {
       //틀렸을 경우
       const answerArray = value.split("").map(v => parseInt(v));
@@ -38,12 +40,13 @@ const NumberBaseball = () => {
       if (tries.length >= 9) {
         // 10번이내 실패시
         setResult(`10번 넘게 돌려서 실패! 답은 ${answer.join("")} 였습니다.`);
-
         alert("게임을 다시 시작합니다");
         setValue("");
-        setTries([]);
         setAnswer(getNumbers());
+        setTries([]);
+        inputEl.current.focus();
       } else {
+        console.log("답은", answer.join(""));
         for (let i = 0; i < 4; i += 1) {
           if (answerArray[i] === answer[i]) {
             strike += 1;
@@ -56,20 +59,23 @@ const NumberBaseball = () => {
           { try: value, result: `${strike} 스트라이크 , ${ball} 볼 입니다` },
         ]);
         setValue("");
+        inputEl.current.focus();
       }
     }
   };
 
-  const onChange = e => {
-    console.log(this.state.answer);
-    this.setState({ value: e.target.value });
-  };
+  const onChange = useCallback(e => setValue(e.target.value), []);
 
   return (
     <>
       <div>{result}</div>
       <form onSubmit={onSubmit}>
-        <input maxLength={4} onChange={onChange} value={value}></input>
+        <input
+          ref={inputEl}
+          maxLength={4}
+          onChange={onChange}
+          value={value}
+        ></input>
         <button type="submit">입력</button>
       </form>
       <div>시도: {tries.length}</div>
